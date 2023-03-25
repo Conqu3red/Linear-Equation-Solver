@@ -26,8 +26,8 @@ def mat_solve(mat: List[List[int]], target: List[int], fraction_mode: bool = Fal
     while True:
         # count non-zero values in each row
         nonzero_counts = [(y, sum(v != 0 for v in row)) for y, row in enumerate(mat)]
-        nonzero_counts.sort(key=lambda row: row[1])
         nonzero_counts = [c for c in nonzero_counts if c[1] > 0]
+        nonzero_counts.sort(key=lambda row: row[1])
         
         # no equations left to modify, algorithm completed
         if len(nonzero_counts) == 0:
