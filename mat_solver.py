@@ -74,6 +74,7 @@ def mat_solve(mat: List[List[int]], target: List[int], fraction_mode: bool = Fal
                     row[x] -= selected_row[x] * multiplier
                 
                 target[i] -= target[var_index] * multiplier
+                row[var_index] = 0
 
         prev_row_index = row_index
     
