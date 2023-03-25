@@ -6,6 +6,7 @@ def solve_linear(equations: List[LinearEquation], fraction_mode: bool = False) -
     variables: Set[str] = set()
     for eq in equations:
         eq.isolate_const()
+        print(eq)
         for var in eq.lhs.variables:
             variables.add(var)
     
@@ -57,4 +58,13 @@ x + y + 6z = 12
 3x - 2y + 2z = 10
 
 x = 4, y = 2, z = 1
+
+
+2x = 1
+2x + y = 2
+
+x + z = 5
+x = y
+y = 1
+
 """
