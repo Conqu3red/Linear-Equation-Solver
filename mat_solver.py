@@ -44,38 +44,38 @@ def mat_solve(mat: List[List[int]], target: List[int], fraction_mode: bool = Fal
         
         # find the first non-zero column.
         selected_row = mat[row_index]
-        for var_index in range(len(selected_row)):
-            if selected_row[var_index] != 0:
+        for var_column in range(len(selected_row)):
+            if selected_row[var_column] != 0:
                 break
 
-        variable_lcm = bulk_lcm([abs(row[var_index]) for row in mat if row[var_index] != 0])
+        variable_lcm = bulk_lcm([abs(row[var_column]) for row in mat if row[var_column] != 0])
         
         # multiply all rows such that each value in the `row_index` column will be the same.
         for i, row in enumerate(mat):
-            if row[var_index] != 0:
-                target[i] *= variable_lcm // row[var_index]
-                list_mult(row, variable_lcm // row[var_index])
+            if row[var_column] != 0:
+                target[i] *= variable_lcm // row[var_column]
+                list_mult(row, variable_lcm // row[var_column])
 
         if nonzero_count[1] == 1:
-            # row only has one value greater than 0, so we have a solution to result[var_index]
+            # row only has one value greater than 0, so we have a solution to result[var_column]
             if fraction_mode:
-                result[var_index] = Fraction(target[row_index], selected_row[var_index])
+                result[var_column] = Fraction(target[row_index], selected_row[var_column])
             else:
-                result[var_index] = target[row_index] / selected_row[var_index]
+                result[var_column] = target[row_index] / selected_row[var_column]
         
         # "substitute" into every other row to efficively zero out this column of the matrix
         for i, row in enumerate(mat):
             if i == row_index and nonzero_count[1] != 1:
                 continue
             
-            multiplier = 1 if row[var_index] > 0 else -1
+            multiplier = 1 if row[var_column] > 0 else -1
             
-            if row[var_index] != 0:
+            if row[var_column] != 0:
                 for x in range(len(row)):
                     row[x] -= selected_row[x] * multiplier
                 
                 target[i] -= target[row_index] * multiplier
-                row[var_index] = 0
+                row[var_column] = 0
 
         prev_row_index = row_index
     
