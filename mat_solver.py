@@ -13,7 +13,8 @@ def debug(mat: List[List[int]], target: List[int]):
     
 
 def mat_solve(mat: List[List[int]], target: List[int], fraction_mode: bool = False):
-    assert len(mat) == len(target) == len(mat[0])
+    if len(mat) == 0 or len(mat) != len(target) or len(mat[0]) != len(target):
+        return None
 
     # goal is to make matrix like
     # a b c
@@ -58,9 +59,9 @@ def mat_solve(mat: List[List[int]], target: List[int], fraction_mode: bool = Fal
         if nonzero_count[1] == 1:
             # row only has one value greater than 0, so we have a solution to result[var_index]
             if fraction_mode:
-                result[var_index] = Fraction(target[var_index], selected_row[var_index])
+                result[var_index] = Fraction(target[row_index], selected_row[var_index])
             else:
-                result[var_index] = target[var_index] / selected_row[var_index]
+                result[var_index] = target[row_index] / selected_row[var_index]
         
         # "substitute" into every other row to efficively zero out this column of the matrix
         for i, row in enumerate(mat):
@@ -73,7 +74,7 @@ def mat_solve(mat: List[List[int]], target: List[int], fraction_mode: bool = Fal
                 for x in range(len(row)):
                     row[x] -= selected_row[x] * multiplier
                 
-                target[i] -= target[var_index] * multiplier
+                target[i] -= target[row_index] * multiplier
                 row[var_index] = 0
 
         prev_row_index = row_index
